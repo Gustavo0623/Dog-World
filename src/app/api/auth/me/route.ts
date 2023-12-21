@@ -1,3 +1,8 @@
+// Route that authenticates the user based on the server jwt secret 
+// To be used with the getUser() in [user]/layout.tsx.
+// Was able to successfully select the cookie but did not allow me to pass it to server component due to security issues. (not recommended)
+// Will change the code logic for login to not authenticate with this page after this commit DATE: Dec 21 7:14PM Philipppine Standard Time
+
 import { GetServerSidePropsContext } from "next";
 import { NextResponse } from "next/server";
 

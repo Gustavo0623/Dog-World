@@ -5,6 +5,7 @@ import { AxiosError } from "axios";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { AxiosResponse } from "axios";
+import { useCookies } from "next-client-cookies"
 
 interface UserResponse {
     user: AxiosResponse | null;
@@ -18,10 +19,11 @@ export default function UserLayout({
 }) {
     const { push } = useRouter()
     const [isSuccess, setIsSuccess] = useState<boolean>(false);
+    const getCookies = useCookies()
     
     useEffect(() => {
         (async ()=> {
-            const { user, error } = await getUser();
+            const { user, error } = await getUser(getCookies.get("fetch-access-token"));
 
             if(error) {
                 setIsSuccess(false)
@@ -32,7 +34,7 @@ export default function UserLayout({
             // If login session is valid
             setIsSuccess(true);
         })();
-    }, [push]);
+    }, [push, getCookies]);
 
     const axiosConfig = {
         withCredentials: true, // Include credentials in the request
@@ -60,9 +62,10 @@ export default function UserLayout({
     ) 
 };
 
-async function getUser(): Promise<UserResponse> {
+async function getUser(getCookies: any): Promise<UserResponse> {
     try {
-        const cookies: boolean  = !!document.cookie
+        const cookies  = !!getCookies()
+        console.log("test")
         console.log(cookies)
         const config = {
             headers: {
