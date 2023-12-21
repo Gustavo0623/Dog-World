@@ -1,18 +1,10 @@
-import React from 'react'
+import { Params } from "next/dist/shared/lib/router/utils/route-matcher"
 
-type Props = {}
+// pages/[userId].tsx
+export default function UserPage({params}: Params){
+  const user = params.user
 
-const page = (
-    {
-        params,
-    }:{
-        params: {user: string}
-    }) => {
   return (
-    <div className="m-auto flex h-screen w-4/5 flex-col items-stretch gap-4 rounded border bg-white p-4 capitalize opacity-95">
-        <h1 className='text-center text-black'>{params.user} Page</h1>
-    </div>
+    <h1>{user}</h1>
   )
 }
-
-export default page
